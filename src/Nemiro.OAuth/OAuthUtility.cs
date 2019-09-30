@@ -491,10 +491,6 @@ namespace Nemiro.OAuth
 
       bool isPost = Array.IndexOf(post, method) != -1;
 
-      // set protocols
-      var securityProtocol = ServicePointManager.SecurityProtocol;
-      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
-
       // ignore errors
       var serverCertificateValidationCallback = ServicePointManager.ServerCertificateValidationCallback;
       ServicePointManager.ServerCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
@@ -696,7 +692,6 @@ namespace Nemiro.OAuth
       }
 
       // restore ServicePoint
-      ServicePointManager.SecurityProtocol = securityProtocol;
       ServicePointManager.ServerCertificateValidationCallback = serverCertificateValidationCallback;
 
       // exception
