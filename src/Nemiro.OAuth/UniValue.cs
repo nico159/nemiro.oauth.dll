@@ -1031,7 +1031,6 @@ namespace Nemiro.OAuth
     /// </summary>
     /// <param name="text">A string containing an url parameters to parse.</param>
     /// <returns>A new <see cref="UniValue"/> instance.</returns>
-    /// <exception cref="InvalidDataException"><paramref name="text"/> contains an <b>CR</b> or <b>LF</b> characters.</exception>
     /// <remarks>
     /// <para>If <paramref name="text"/> is <b>null</b> or empty, the function returns an <see cref="UniValue.Empty"/> instance.</para>
     /// </remarks>
@@ -1039,10 +1038,7 @@ namespace Nemiro.OAuth
     {
       if (String.IsNullOrEmpty(text)) { return UniValue.Empty; }
 
-      if (text.IndexOf("\r") != -1 || text.IndexOf("\n") != -1)
-      {
-        throw new InvalidDataException("CR and LF are not allowed in the Parameters string.");
-      }
+      text = text.Replace("\r", String.Empty).Replace("\n", String.Empty);
 
       if (Regex.IsMatch(text, @"([^\x3D]+)=([^\x26]*)", RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.IgnoreCase))
       {
